@@ -17,4 +17,28 @@ public class Vitima implements Serializable {
 
     @OneToMany(mappedBy = "vitima", cascade = CascadeType.MERGE)
     private List<VitimaCrime> vitimaCrimes;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<VitimaCrime> getVitimaCrimes() {
+        return vitimaCrimes;
+    }
+
+    public void setVitimaCrimes(List<VitimaCrime> vitimaCrimes) {
+        this.vitimaCrimes = vitimaCrimes;
+    }
 }

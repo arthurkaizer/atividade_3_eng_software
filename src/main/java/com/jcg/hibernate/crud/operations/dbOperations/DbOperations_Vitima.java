@@ -1,6 +1,6 @@
 package com.jcg.hibernate.crud.operations.dbOperations;
 
-import com.jcg.hibernate.crud.operations.Model.Crime;
+import com.jcg.hibernate.crud.operations.Model.Vitima;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,10 +12,11 @@ import org.jboss.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbOperations_Crime {
+public class DbOperations_Vitima {
+
     static Session sessionObj;
     static SessionFactory sessionFactoryObj;
-    public final static Logger logger = Logger.getLogger(DbOperations_Crime.class);
+    public final static Logger logger = Logger.getLogger(DbOperations_Vitima.class);
 
     // This Method Is Used To Create The Hibernate's SessionFactory Object
     private static SessionFactory buildSessionFactory() {
@@ -31,19 +32,22 @@ public class DbOperations_Crime {
         return sessionFactoryObj;
     }
 
-    // Method 1: This Method Used To Create A New crime Record In The Database Table
-    public static void createCrime(Crime crime) {
+    // Method 1: This Method Used To Create A New Student Record In The Database Table
+    public static void createRecord(Vitima vitimaObj) {
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
+
             // Creating Transaction Entities
-            sessionObj.save(crime);
+
+            sessionObj.save(vitimaObj);
+
+
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-
-            System.out.println("\nSuccessfully Created '" + crime.getId() + "' Records In The Database!\n");
+            System.out.println("\nSuccessfully Created '" + 1 + "' Records In The Database!\n");
         } catch(Exception sqlException) {
             if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
@@ -60,15 +64,15 @@ public class DbOperations_Crime {
 
     // Method 2: This Method Is Used To Display The Records From The Database Table
     @SuppressWarnings("unchecked")
-    public static List<Crime> displayCrimes() {
-        List<Crime> crimeList = new ArrayList<Crime>();
+    public static List<Vitima> displayRecords() {
+        List<Vitima> vitimaList = new ArrayList<Vitima>();
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            crimeList = sessionObj.createQuery("FROM Crime_699742_701298").list();
+            vitimaList = sessionObj.createQuery("from Vitima_699742_701298").list();
         } catch(Exception sqlException) {
             if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
@@ -80,11 +84,11 @@ public class DbOperations_Crime {
                 sessionObj.close();
             }
         }
-        return crimeList;
+        return vitimaList;
     }
 
     // Method 3: This Method Is Used To Update A Record In The Database Table
-    public static void updateCrime(Crime crime) {
+    public static void updateRecord(Vitima vitima) {
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
@@ -92,12 +96,10 @@ public class DbOperations_Crime {
             sessionObj.beginTransaction();
 
             // Creating Transaction Entity
-            Crime crimeObj = (Crime) sessionObj.get(Crime.class, crime.getId());
-            crimeObj.setDescricao(crime.getDescricao());
-
+            Vitima vitimaObj = (Vitima) sessionObj.get(Vitima.class, vitima.getId());
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\nCrime With Id?= " + crime.getId() + " Is Successfully Updated In The Database!\n");
+            System.out.println("\nContato With Id?= " + vitima.getId() + " Is Successfully Updated In The Database!\n");
         } catch(Exception sqlException) {
             if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
@@ -112,19 +114,19 @@ public class DbOperations_Crime {
     }
 
     // Method 4(a): This Method Is Used To Delete A Particular Record From The Database Table
-    public static void deleteCrime(Integer id) {
+    public static void deleteRecord(Integer id) {
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            Crime crimeObj = findCrimeById(id);
-            sessionObj.delete(crimeObj);
+            Vitima vitimaObj = findRecordById(id);
+            sessionObj.delete(vitimaObj);
 
             // Committing The Transactions To The Database
             sessionObj.getTransaction().commit();
-            System.out.println("\ncrime With Id?= " + id + " Is Successfully Deleted From The Database!\n");
+            System.out.println("\nvitima With Id?= " + id + " Is Successfully Deleted From The Database!\n");
         } catch(Exception sqlException) {
             if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
@@ -139,15 +141,15 @@ public class DbOperations_Crime {
     }
 
     // Method 4(b): This Method To Find Particular Record In The Database Table
-    public static Crime findCrimeById(Integer id) {
-        Crime findCrimeObj = null;
+    public static Vitima findRecordById(Integer id) {
+        Vitima findVitimaObj = null;
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            findCrimeObj = (Crime) sessionObj.load(Crime.class, id);
+            findVitimaObj = (Vitima) sessionObj.load(Vitima.class, id);
         } catch(Exception sqlException) {
             if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
@@ -155,18 +157,18 @@ public class DbOperations_Crime {
             }
             sqlException.printStackTrace();
         }
-        return findCrimeObj;
+        return findVitimaObj;
     }
 
     // Method 5: This Method Is Used To Delete All Records From The Database Table
-    public static void deleteAllCrimes() {
+    public static void deleteAllRecords() {
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            Query queryObj = sessionObj.createQuery("DELETE FROM Crime_699742_701298");
+            Query queryObj = sessionObj.createQuery("DELETE from Vitima_699742_701298");
             queryObj.executeUpdate();
 
             // Committing The Transactions To The Database
@@ -185,24 +187,24 @@ public class DbOperations_Crime {
         }
     }
 
-    public static Crime getByDescricao(String descricaoDigitada) {
-        Crime findCrimeObj = null;
+    public static Vitima getByName(String nomeDigitado) {
+        Vitima findVitimaObj = null;
         try {
             // Getting Session Object From SessionFactory
             sessionObj = buildSessionFactory().openSession();
             // Getting Transaction Object From Session Object
             sessionObj.beginTransaction();
 
-            findCrimeObj = (Crime) sessionObj.createQuery("from Crime_699742_701298 where descricao = :descricao").setParameter("descricao", descricaoDigitada).uniqueResult();
+            findVitimaObj = (Vitima) sessionObj.createQuery("from Vitima_699742_701298 where nome = :nome").setParameter("nome", nomeDigitado).uniqueResult();
 
 
-        } catch (Exception sqlException) {
-            if (null != sessionObj.getTransaction()) {
+        } catch(Exception sqlException) {
+            if(null != sessionObj.getTransaction()) {
                 System.out.println("\n.......Transaction Is Being Rolled Back.......\n");
                 sessionObj.getTransaction().rollback();
             }
             sqlException.printStackTrace();
         }
-        return findCrimeObj;
+        return findVitimaObj;
     }
 }

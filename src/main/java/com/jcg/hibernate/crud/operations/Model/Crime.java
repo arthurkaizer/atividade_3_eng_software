@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="CRIME_689386_698159")
+@Table(name="Crime_689386_698159")
 public class Crime implements Serializable {
     private static final long serialVersionUID = 1L;
 
