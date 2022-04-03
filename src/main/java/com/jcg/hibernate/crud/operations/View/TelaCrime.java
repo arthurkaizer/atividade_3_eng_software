@@ -89,7 +89,7 @@ public class TelaCrime extends JFrame implements ActionListener {
         btnPesquisar.addActionListener(this);
         btnPesquisar.setActionCommand("pesquisar");
         contentPane.add(btnPesquisar);
-        this.carregaListaCrime();
+        //this.carregaListaCrime();
     }
     public Crime montaCrime(){
         //Pega os dados digitados nos campos do formulário e atribui ao objeto da classe Contato;
